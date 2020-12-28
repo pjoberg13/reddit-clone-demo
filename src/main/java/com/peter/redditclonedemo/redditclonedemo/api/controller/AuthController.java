@@ -1,5 +1,6 @@
 package com.peter.redditclonedemo.redditclonedemo.api.controller;
 
+import com.peter.redditclonedemo.redditclonedemo.api.dto.LoginRequest;
 import com.peter.redditclonedemo.redditclonedemo.api.dto.RegisterRequest;
 import com.peter.redditclonedemo.redditclonedemo.api.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,10 @@ public class AuthController {
         public ResponseEntity<String> verifyAccount(@PathVariable String token) {
         authService.verifyAccount(token);
         return new ResponseEntity<>("User Account Successfully Verified", HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public void login(@RequestBody LoginRequest loginRequest) {
+        authService.login(loginRequest);
     }
 }
