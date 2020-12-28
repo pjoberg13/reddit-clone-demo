@@ -18,6 +18,15 @@
 		<java.version>11</java.version>
 	</properties>
 
+	<resources>
+		<resource>
+			<directory>$Dev/redditCloneDemo/src/main/resources</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</resource>
+	</resources>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
