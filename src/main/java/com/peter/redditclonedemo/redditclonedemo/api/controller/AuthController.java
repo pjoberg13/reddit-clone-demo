@@ -1,5 +1,6 @@
 package com.peter.redditclonedemo.redditclonedemo.api.controller;
 
+import com.peter.redditclonedemo.redditclonedemo.api.dto.AuthenticationResponse;
 import com.peter.redditclonedemo.redditclonedemo.api.dto.LoginRequest;
 import com.peter.redditclonedemo.redditclonedemo.api.dto.RegisterRequest;
 import com.peter.redditclonedemo.redditclonedemo.api.service.AuthService;
@@ -28,7 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginRequest loginRequest) {
-        authService.login(loginRequest);
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 }
