@@ -1,2 +1,3 @@
 # reddit-clone-demo
-Backend code for a Reddit clone using Spring Boot
+All backend code for a Reddit clone web app using Spring Boot\
+Based on SaiUpadhyayula's [guide](https://github.com/SaiUpadhyayula/spring-reddit-clone) 
