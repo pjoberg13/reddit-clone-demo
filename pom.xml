@@ -18,15 +18,6 @@
 		<java.version>11</java.version>
 	</properties>
 
-	<resources>
-		<resource>
-			<directory>$Dev/redditCloneDemo/src/main/resources</directory>
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</resource>
-	</resources>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -80,7 +71,23 @@
 			<artifactId>thymeleaf</artifactId>
 			<version>3.0.11.RELEASE</version>
 		</dependency>
-
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<scope>runtime</scope>
+			<version>0.11.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<scope>runtime</scope>
+			<version>0.11.2</version>
+		</dependency>
 		<dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
