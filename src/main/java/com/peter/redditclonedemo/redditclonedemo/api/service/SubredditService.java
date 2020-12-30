@@ -28,12 +28,6 @@ public class SubredditService {
         return subredditDto;
     }
 
-//    private Subreddit mapSubreddittoDto(SubredditDto subredditDto) {
-//        return Subreddit.builder().name(subredditDto.getName())
-//                .description(subredditDto.getDescription())
-//                .build();
-//    }
-
     @Transactional(readOnly = true)
     public List<SubredditDto> getAll() {
         return subredditRepository.findAll()
@@ -48,11 +42,4 @@ public class SubredditService {
         return subredditMapper.mapSubredditToDto(subreddit);
     }
 
-//    private SubredditDto mapToDto(Subreddit subreddit) {
-//        return SubredditDto.builder()
-//                .name(subreddit.getName())
-//                .subredditId(subreddit.getSubredditId())
-//                .numberOfPosts(subreddit.getPosts().size())
-//                .build();
-//    }
 }
