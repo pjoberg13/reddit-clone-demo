@@ -1,6 +1,8 @@
 package com.peter.redditclonedemo.redditclonedemo.api.service;
 
 import com.peter.redditclonedemo.redditclonedemo.api.dto.SubredditDto;
+import com.peter.redditclonedemo.redditclonedemo.api.exceptions.SpringRedditDemoException;
+import com.peter.redditclonedemo.redditclonedemo.api.mapper.SubredditMapper;
 import com.peter.redditclonedemo.redditclonedemo.api.model.Subreddit;
 import com.peter.redditclonedemo.redditclonedemo.api.repository.SubredditRepository;
 import lombok.AllArgsConstructor;
@@ -17,33 +19,40 @@ import java.util.stream.Collectors;
 public class SubredditService {
 
     private final SubredditRepository subredditRepository;
+    private final SubredditMapper subredditMapper;
 
     @Transactional
     public SubredditDto save(SubredditDto subredditDto) {
-        Subreddit save = subredditRepository.save(mapSubreddittoDto(subredditDto));
-        subredditDto.setId(save.getSubredditId());
+        Subreddit save = subredditRepository.save(subredditMapper.mapDtoToSubreddit(subredditDto));
+        subredditDto.setSubredditId(save.getSubredditId());
         return subredditDto;
     }
 
-    private Subreddit mapSubreddittoDto(SubredditDto subredditDto) {
-        return Subreddit.builder().name(subredditDto.getName())
-                .description(subredditDto.getDescription())
-                .build();
-    }
+//    private Subreddit mapSubreddittoDto(SubredditDto subredditDto) {
+//        return Subreddit.builder().name(subredditDto.getName())
+//                .description(subredditDto.getDescription())
+//                .build();
+//    }
 
     @Transactional(readOnly = true)
     public List<SubredditDto> getAll() {
         return subredditRepository.findAll()
                 .stream()
-                .map(this::mapToDto)
+                .map(subredditMapper::mapSubredditToDto)
                 .collect(Collectors.toList());
     }
 
-    private SubredditDto mapToDto(Subreddit subreddit) {
-        return SubredditDto.builder()
-                .name(subreddit.getName())
-                .id(subreddit.getSubredditId())
-                .numberOfPosts(subreddit.getPosts().size())
-                .build();
+    public SubredditDto getSubreddit(Long subredditId) {
+        Subreddit subreddit = subredditRepository.findById(subredditId)
+                .orElseThrow(() -> new SpringRedditDemoException("No subreddit found with that ID"));
+        return subredditMapper.mapSubredditToDto(subreddit);
     }
+
+//    private SubredditDto mapToDto(Subreddit subreddit) {
+//        return SubredditDto.builder()
+//                .name(subreddit.getName())
+//                .subredditId(subreddit.getSubredditId())
+//                .numberOfPosts(subreddit.getPosts().size())
+//                .build();
+//    }
 }
