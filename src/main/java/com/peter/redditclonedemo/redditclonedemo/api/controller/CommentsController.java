@@ -27,7 +27,7 @@ public class CommentsController {
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllCommentsForPost(postId));
     }
 
-    @GetMapping("by-user/userName")
+    @GetMapping("by-user/{userName}")
     public ResponseEntity<List<CommentsDto>> getAllCommentsForUser(@PathVariable String userName) {
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllCommentsForUser(userName));
     }

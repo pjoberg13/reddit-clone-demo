@@ -2,12 +2,16 @@ package com.peter.redditclonedemo.redditclonedemo.api.controller;
 
 import com.peter.redditclonedemo.redditclonedemo.api.dto.AuthenticationResponse;
 import com.peter.redditclonedemo.redditclonedemo.api.dto.LoginRequest;
+import com.peter.redditclonedemo.redditclonedemo.api.dto.RefreshTokenRequest;
 import com.peter.redditclonedemo.redditclonedemo.api.dto.RegisterRequest;
 import com.peter.redditclonedemo.redditclonedemo.api.service.AuthService;
+import com.peter.redditclonedemo.redditclonedemo.api.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -23,7 +28,7 @@ public class AuthController {
     }
 
     @GetMapping("accountVerification/{token}")
-        public ResponseEntity<String> verifyAccount(@PathVariable String token) {
+    public ResponseEntity<String> verifyAccount(@PathVariable String token) {
         authService.verifyAccount(token);
         return new ResponseEntity<>("User Account Successfully Verified", HttpStatus.OK);
     }
@@ -31,5 +36,16 @@ public class AuthController {
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
+    }
+
+    @PostMapping("refresh/token")
+    public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        return authService.refreshToken(refreshTokenRequest);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+        return ResponseEntity.status(HttpStatus.OK).body("logout successful");
     }
 }
